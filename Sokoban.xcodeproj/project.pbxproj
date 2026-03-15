@@ -7,44 +7,48 @@
     objects = {
 
 /* Begin PBXBuildFile section */
-        DF1C7C691AF84DDB9F5C5246 /* SokobanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB94ECF03A0A44EA9DF4FBC7; };
-        A187B549B03148A28F68FE0C /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A9ABD412C2470C9A0F0A78; };
-        556BB9AF41794D5386162182 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F75664B9174338AF461A4D; };
-        B121864430A64942A302F5A9 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40D5C3FD751448C98A47945; };
-        7DBAC84D56D043D79321B77B /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E4E55836D642B1AE0CBCAB; };
-        45D3AFBC758543048A4C04C7 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B8D79C9AE34B3D8A3631BE; };
-        B1DC62AE46A548348C81B286 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923CC8A789D4C35BB325428; };
-        2A8D9455D9A247A6B1AFAB98 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAA1F7379BF415E8719BB41; };
-        373FA4A9684B4A808BC36DEB /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E2ECFB4BE04C6593611FD0; };
-        BE166F6D26794896BF6E4EC6 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E21E0BD554310A532FAE5; };
-        33DC2682CF5A413A93732A48 /* LevelSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F715DAE2524482924BEBC2; };
-        E7D2C80A0EF146FF8AB527E1 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFD7EDF122A453B9D68F0E5; };
-        C1DDA77FE9834C9AAD178C4F /* Levels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 02646E9BAFE14E5BBDA96E7B; };
-		AA1234567890ABCD12345678 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB1234567890ABCD12345678; };
-		DD112233445566778899AABB /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC112233445566778899AABB; };
-		FF112233445566778899AABB /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE112233445566778899AABB; };
-		BB223344556677889900BBCC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA223344556677889900BBCC; };
+        2A8D9455D9A247A6B1AFAB98 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAA1F7379BF415E8719BB41 /* GameScene.swift */; };
+        33DC2682CF5A413A93732A48 /* LevelSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F715DAE2524482924BEBC2 /* LevelSelectView.swift */; };
+        373FA4A9684B4A808BC36DEB /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E2ECFB4BE04C6593611FD0 /* MainMenuView.swift */; };
+        45D3AFBC758543048A4C04C7 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B8D79C9AE34B3D8A3631BE /* GameManager.swift */; };
+        556BB9AF41794D5386162182 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F75664B9174338AF461A4D /* Direction.swift */; };
+        7DBAC84D56D043D79321B77B /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E4E55836D642B1AE0CBCAB /* LevelManager.swift */; };
+        A187B549B03148A28F68FE0C /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A9ABD412C2470C9A0F0A78 /* Tile.swift */; };
+        AA1234567890ABCD12345678 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB1234567890ABCD12345678 /* Assets.xcassets */; };
+        B121864430A64942A302F5A9 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40D5C3FD751448C98A47945 /* GameState.swift */; };
+        B1DC62AE46A548348C81B286 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923CC8A789D4C35BB325428 /* PersistenceManager.swift */; };
+        BB223344556677889900BBCC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA223344556677889900BBCC /* SettingsView.swift */; };
+        BE166F6D26794896BF6E4EC6 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E21E0BD554310A532FAE5 /* GameView.swift */; };
+        C1DDA77FE9834C9AAD178C4F /* Levels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 02646E9BAFE14E5BBDA96E7B /* Levels.txt */; };
+        DD112233445566778899AABB /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC112233445566778899AABB /* SoundManager.swift */; };
+        DF1C7C691AF84DDB9F5C5246 /* SokobanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB94ECF03A0A44EA9DF4FBC7 /* SokobanApp.swift */; };
+        E7D2C80A0EF146FF8AB527E1 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFD7EDF122A453B9D68F0E5 /* AboutView.swift */; };
+        FF112233445566778899AABB /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE112233445566778899AABB /* HapticsManager.swift */; };
+        AA334455667788990011CCDD /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB334455667788990011CCDD /* ThemeManager.swift */; };
+        CC556677889900AABB112233 /* MusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD556677889900AABB112233 /* MusicManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-        DB94ECF03A0A44EA9DF4FBC7 /* SokobanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SokobanApp.swift; sourceTree = "<group>"; };
-        B9A9ABD412C2470C9A0F0A78 /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
-        37F75664B9174338AF461A4D /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
-        C40D5C3FD751448C98A47945 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
-        19E4E55836D642B1AE0CBCAB /* LevelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelManager.swift; sourceTree = "<group>"; };
-        19B8D79C9AE34B3D8A3631BE /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
-        0923CC8A789D4C35BB325428 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
-        CBAA1F7379BF415E8719BB41 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-        D8E2ECFB4BE04C6593611FD0 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
-        C25E21E0BD554310A532FAE5 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-        B5F715DAE2524482924BEBC2 /* LevelSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelectView.swift; sourceTree = "<group>"; };
-        CBFD7EDF122A453B9D68F0E5 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
         02646E9BAFE14E5BBDA96E7B /* Levels.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Levels.txt; sourceTree = "<group>"; };
-        BB1234567890ABCD12345678 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+        0923CC8A789D4C35BB325428 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+        19B8D79C9AE34B3D8A3631BE /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
+        19E4E55836D642B1AE0CBCAB /* LevelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelManager.swift; sourceTree = "<group>"; };
+        37F75664B9174338AF461A4D /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
+        AA223344556677889900BBCC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+        B5F715DAE2524482924BEBC2 /* LevelSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelectView.swift; sourceTree = "<group>"; };
         B886EE1C6B514222BF3C53E4 /* Sokoban.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sokoban.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC112233445566778899AABB /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
-		EE112233445566778899AABB /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
-		AA223344556677889900BBCC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+        B9A9ABD412C2470C9A0F0A78 /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
+        BB1234567890ABCD12345678 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+        C25E21E0BD554310A532FAE5 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+        C40D5C3FD751448C98A47945 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
+        CBAA1F7379BF415E8719BB41 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+        CBFD7EDF122A453B9D68F0E5 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+        CC112233445566778899AABB /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+        D8E2ECFB4BE04C6593611FD0 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
+        DB94ECF03A0A44EA9DF4FBC7 /* SokobanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SokobanApp.swift; sourceTree = "<group>"; };
+        EE112233445566778899AABB /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
+        BB334455667788990011CCDD /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+        DD556677889900AABB112233 /* MusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +62,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-        51753D9CD95D4728BC9F6A5F = {
+        36762F2F8C91427EB62BC443 /* Resources */ = {
+            isa = PBXGroup;
+            children = (
+                02646E9BAFE14E5BBDA96E7B /* Levels.txt */,
+                BB1234567890ABCD12345678 /* Assets.xcassets */,
+            );
+            path = Resources;
+            sourceTree = "<group>";
+        };
+        3BFD4598959B4C54ADFCD482 /* Views */ = {
+            isa = PBXGroup;
+            children = (
+                D8E2ECFB4BE04C6593611FD0 /* MainMenuView.swift */,
+                C25E21E0BD554310A532FAE5 /* GameView.swift */,
+                B5F715DAE2524482924BEBC2 /* LevelSelectView.swift */,
+                CBFD7EDF122A453B9D68F0E5 /* AboutView.swift */,
+                AA223344556677889900BBCC /* SettingsView.swift */,
+            );
+            path = Views;
+            sourceTree = "<group>";
+        };
+        51753D9CD95D4728BC9F6A5F /* Sokoban */ = {
             isa = PBXGroup;
             children = (
                 DB94ECF03A0A44EA9DF4FBC7 /* SokobanApp.swift */,
@@ -69,57 +94,6 @@
                 36762F2F8C91427EB62BC443 /* Resources */,
             );
             path = Sokoban;
-            sourceTree = "<group>";
-        };
-        D2EF3403626E439FBE37A100 /* Models */ = {
-            isa = PBXGroup;
-            children = (
-                B9A9ABD412C2470C9A0F0A78 /* Tile.swift */,
-                37F75664B9174338AF461A4D /* Direction.swift */,
-                C40D5C3FD751448C98A47945 /* GameState.swift */,
-            );
-            path = Models;
-            sourceTree = "<group>";
-        };
-        CCED5E39BA974095B808CE2A /* Managers */ = {
-            isa = PBXGroup;
-            children = (
-                19E4E55836D642B1AE0CBCAB /* LevelManager.swift */,
-                19B8D79C9AE34B3D8A3631BE /* GameManager.swift */,
-                0923CC8A789D4C35BB325428 /* PersistenceManager.swift */,
-				CC112233445566778899AABB /* SoundManager.swift */,
-				EE112233445566778899AABB /* HapticsManager.swift */,
-            );
-            path = Managers;
-            sourceTree = "<group>";
-        };
-        9FA3A7F7AB8F42FCAAC3ED78 /* Scenes */ = {
-            isa = PBXGroup;
-            children = (
-                CBAA1F7379BF415E8719BB41 /* GameScene.swift */,
-            );
-            path = Scenes;
-            sourceTree = "<group>";
-        };
-        3BFD4598959B4C54ADFCD482 /* Views */ = {
-            isa = PBXGroup;
-            children = (
-                D8E2ECFB4BE04C6593611FD0 /* MainMenuView.swift */,
-                C25E21E0BD554310A532FAE5 /* GameView.swift */,
-                B5F715DAE2524482924BEBC2 /* LevelSelectView.swift */,
-                CBFD7EDF122A453B9D68F0E5 /* AboutView.swift */,
-				AA223344556677889900BBCC /* SettingsView.swift */,
-            );
-            path = Views;
-            sourceTree = "<group>";
-        };
-        36762F2F8C91427EB62BC443 /* Resources */ = {
-            isa = PBXGroup;
-            children = (
-                02646E9BAFE14E5BBDA96E7B /* Levels.txt */,
-				BB1234567890ABCD12345678 /* Assets.xcassets */,
-            );
-            path = Resources;
             sourceTree = "<group>";
         };
         6A53A21CEE1E4B7BB2C199AA = {
@@ -138,12 +112,44 @@
             name = Products;
             sourceTree = "<group>";
         };
+        9FA3A7F7AB8F42FCAAC3ED78 /* Scenes */ = {
+            isa = PBXGroup;
+            children = (
+                CBAA1F7379BF415E8719BB41 /* GameScene.swift */,
+            );
+            path = Scenes;
+            sourceTree = "<group>";
+        };
+        CCED5E39BA974095B808CE2A /* Managers */ = {
+            isa = PBXGroup;
+            children = (
+                19E4E55836D642B1AE0CBCAB /* LevelManager.swift */,
+                19B8D79C9AE34B3D8A3631BE /* GameManager.swift */,
+                0923CC8A789D4C35BB325428 /* PersistenceManager.swift */,
+                CC112233445566778899AABB /* SoundManager.swift */,
+                EE112233445566778899AABB /* HapticsManager.swift */,
+                BB334455667788990011CCDD /* ThemeManager.swift */,
+                DD556677889900AABB112233 /* MusicManager.swift */,
+            );
+            path = Managers;
+            sourceTree = "<group>";
+        };
+        D2EF3403626E439FBE37A100 /* Models */ = {
+            isa = PBXGroup;
+            children = (
+                B9A9ABD412C2470C9A0F0A78 /* Tile.swift */,
+                37F75664B9174338AF461A4D /* Direction.swift */,
+                C40D5C3FD751448C98A47945 /* GameState.swift */,
+            );
+            path = Models;
+            sourceTree = "<group>";
+        };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
         CFFF3AE7FAE14BB1BFDFF796 /* Sokoban */ = {
             isa = PBXNativeTarget;
-            buildConfigurationList = E097C51C08224EBE97387155;
+            buildConfigurationList = E097C51C08224EBE97387155 /* Build configuration list for PBXNativeTarget "Sokoban" */;
             buildPhases = (
                 DF5E450A5F0A4C1C96800741 /* Sources */,
                 97119B6241F9458F9D12E0F8 /* Frameworks */,
@@ -155,7 +161,7 @@
             );
             name = Sokoban;
             productName = Sokoban;
-            productReference = B886EE1C6B514222BF3C53E4;
+            productReference = B886EE1C6B514222BF3C53E4 /* Sokoban.app */;
             productType = "com.apple.product-type.application";
         };
 /* End PBXNativeTarget section */
@@ -168,7 +174,7 @@
                 LastSwiftUpdateCheck = 1540;
                 LastUpgradeCheck = 1540;
             };
-            buildConfigurationList = 217DC18AA6274283BDF585E1;
+            buildConfigurationList = 217DC18AA6274283BDF585E1 /* Build configuration list for PBXProject "Sokoban" */;
             compatibilityVersion = "Xcode 14.0";
             developmentRegion = en;
             hasScannedForEncodings = 0;
@@ -177,7 +183,7 @@
                 Base,
             );
             mainGroup = 6A53A21CEE1E4B7BB2C199AA;
-            productRefGroup = 9E46A66091AE4E8B8C47B3B7;
+            productRefGroup = 9E46A66091AE4E8B8C47B3B7 /* Products */;
             projectDirPath = "";
             projectRoot = "";
             targets = (
@@ -192,7 +198,7 @@
             buildActionMask = 2147483647;
             files = (
                 C1DDA77FE9834C9AAD178C4F /* Levels.txt in Resources */,
-				AA1234567890ABCD12345678 /* Assets.xcassets in Resources */,
+                AA1234567890ABCD12345678 /* Assets.xcassets in Resources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
@@ -215,15 +221,91 @@
                 BE166F6D26794896BF6E4EC6 /* GameView.swift in Sources */,
                 33DC2682CF5A413A93732A48 /* LevelSelectView.swift in Sources */,
                 E7D2C80A0EF146FF8AB527E1 /* AboutView.swift in Sources */,
-				DD112233445566778899AABB /* SoundManager.swift in Sources */,
-				FF112233445566778899AABB /* HapticsManager.swift in Sources */,
-				BB223344556677889900BBCC /* SettingsView.swift in Sources */,
+                DD112233445566778899AABB /* SoundManager.swift in Sources */,
+                FF112233445566778899AABB /* HapticsManager.swift in Sources */,
+                BB223344556677889900BBCC /* SettingsView.swift in Sources */,
+                AA334455667788990011CCDD /* ThemeManager.swift in Sources */,
+                CC556677889900AABB112233 /* MusicManager.swift in Sources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+        23F4AD9A429D47B0831A14E6 /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                CODE_SIGN_STYLE = Automatic;
+                CURRENT_PROJECT_VERSION = 1;
+                DEVELOPMENT_TEAM = DR4NTK9NNT;
+                GENERATE_INFOPLIST_FILE = YES;
+                INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+                INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+                INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+                INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+                LD_RUNPATH_SEARCH_PATHS = (
+                    "$(inherited)",
+                    "@executable_path/Frameworks",
+                );
+                MARKETING_VERSION = 1.0;
+                PRODUCT_BUNDLE_IDENTIFIER = com.sokoban.ipad;
+                PRODUCT_NAME = "$(TARGET_NAME)";
+                SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+                SUPPORTS_MACCATALYST = NO;
+                SWIFT_EMIT_LOC_STRINGS = YES;
+                SWIFT_VERSION = 5.0;
+                TARGETED_DEVICE_FAMILY = 2;
+            };
+            name = Debug;
+        };
+        B7AD91D6D20548F89F6DDDA3 /* Release */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ANALYZER_NONNULL = YES;
+                CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+                CLANG_ENABLE_MODULES = YES;
+                CLANG_ENABLE_OBJC_ARC = YES;
+                COPY_PHASE_STRIP = NO;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                ENABLE_NS_ASSERTIONS = NO;
+                ENABLE_STRICT_OBJC_MSGSEND = YES;
+                IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+                MTL_ENABLE_DEBUG_INFO = NO;
+                SDKROOT = iphoneos;
+                SWIFT_COMPILATION_MODE = wholemodule;
+                VALIDATE_PRODUCT = YES;
+            };
+            name = Release;
+        };
+        D5182E612BC44BD485330EAE /* Release */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                CODE_SIGN_STYLE = Automatic;
+                CURRENT_PROJECT_VERSION = 1;
+                DEVELOPMENT_TEAM = DR4NTK9NNT;
+                GENERATE_INFOPLIST_FILE = YES;
+                INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+                INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+                INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+                INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+                LD_RUNPATH_SEARCH_PATHS = (
+                    "$(inherited)",
+                    "@executable_path/Frameworks",
+                );
+                MARKETING_VERSION = 1.0;
+                PRODUCT_BUNDLE_IDENTIFIER = com.sokoban.ipad;
+                PRODUCT_NAME = "$(TARGET_NAME)";
+                SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+                SUPPORTS_MACCATALYST = NO;
+                SWIFT_EMIT_LOC_STRINGS = YES;
+                SWIFT_VERSION = 5.0;
+                TARGETED_DEVICE_FAMILY = 2;
+            };
+            name = Release;
+        };
         F7F094B287064184BCE6F201 /* Debug */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
@@ -251,82 +333,10 @@
             };
             name = Debug;
         };
-        B7AD91D6D20548F89F6DDDA3 /* Release */ = {
-            isa = XCBuildConfiguration;
-            buildSettings = {
-                ALWAYS_SEARCH_USER_PATHS = NO;
-                CLANG_ANALYZER_NONNULL = YES;
-                CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-                CLANG_ENABLE_MODULES = YES;
-                CLANG_ENABLE_OBJC_ARC = YES;
-                COPY_PHASE_STRIP = NO;
-                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-                ENABLE_NS_ASSERTIONS = NO;
-                ENABLE_STRICT_OBJC_MSGSEND = YES;
-                IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-                MTL_ENABLE_DEBUG_INFO = NO;
-                SDKROOT = iphoneos;
-                SWIFT_COMPILATION_MODE = wholemodule;
-                VALIDATE_PRODUCT = YES;
-            };
-            name = Release;
-        };
-        23F4AD9A429D47B0831A14E6 /* Debug */ = {
-            isa = XCBuildConfiguration;
-            buildSettings = {
-                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-                CODE_SIGN_STYLE = Automatic;
-                CURRENT_PROJECT_VERSION = 1;
-                GENERATE_INFOPLIST_FILE = YES;
-                INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-                INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-                INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-                INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
-                LD_RUNPATH_SEARCH_PATHS = (
-                    "$(inherited)",
-                    "@executable_path/Frameworks",
-                );
-                MARKETING_VERSION = 1.0;
-                PRODUCT_BUNDLE_IDENTIFIER = com.sokoban.ipad;
-                PRODUCT_NAME = "$(TARGET_NAME)";
-                SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-                SUPPORTS_MACCATALYST = NO;
-                SWIFT_EMIT_LOC_STRINGS = YES;
-                SWIFT_VERSION = 5.0;
-                TARGETED_DEVICE_FAMILY = 2;
-            };
-            name = Debug;
-        };
-        D5182E612BC44BD485330EAE /* Release */ = {
-            isa = XCBuildConfiguration;
-            buildSettings = {
-                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-                CODE_SIGN_STYLE = Automatic;
-                CURRENT_PROJECT_VERSION = 1;
-                GENERATE_INFOPLIST_FILE = YES;
-                INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-                INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-                INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-                INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
-                LD_RUNPATH_SEARCH_PATHS = (
-                    "$(inherited)",
-                    "@executable_path/Frameworks",
-                );
-                MARKETING_VERSION = 1.0;
-                PRODUCT_BUNDLE_IDENTIFIER = com.sokoban.ipad;
-                PRODUCT_NAME = "$(TARGET_NAME)";
-                SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-                SUPPORTS_MACCATALYST = NO;
-                SWIFT_EMIT_LOC_STRINGS = YES;
-                SWIFT_VERSION = 5.0;
-                TARGETED_DEVICE_FAMILY = 2;
-            };
-            name = Release;
-        };
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-        217DC18AA6274283BDF585E1 /* Build configuration list for PBXProject */ = {
+        217DC18AA6274283BDF585E1 /* Build configuration list for PBXProject "Sokoban" */ = {
             isa = XCConfigurationList;
             buildConfigurations = (
                 F7F094B287064184BCE6F201 /* Debug */,
@@ -335,7 +345,7 @@
             defaultConfigurationIsVisible = 0;
             defaultConfigurationName = Release;
         };
-        E097C51C08224EBE97387155 /* Build configuration list for PBXNativeTarget */ = {
+        E097C51C08224EBE97387155 /* Build configuration list for PBXNativeTarget "Sokoban" */ = {
             isa = XCConfigurationList;
             buildConfigurations = (
                 23F4AD9A429D47B0831A14E6 /* Debug */,
@@ -345,7 +355,6 @@
             defaultConfigurationName = Release;
         };
 /* End XCConfigurationList section */
-
     };
-    rootObject = 72E2AA72A4D44AC0A95D14A2;
+    rootObject = 72E2AA72A4D44AC0A95D14A2 /* Project object */;
 }

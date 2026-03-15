@@ -1,0 +1,863 @@
+import SpriteKit
+import UIKit
+
+final class GameScene: SKScene {
+
+    weak var gameManager: GameManager?
+
+    private var tileSize: CGFloat = 32
+    private var gridOrigin: CGPoint = .zero
+    private var tileNodes: [[SKSpriteNode]] = []
+    private var playerNode: SKSpriteNode!
+    private var lastDirection: Direction = .down
+    private var previousGrid: [[Tile]] = []
+
+    private let animationDuration: TimeInterval = 0.12
+    private var isMovingAlongPath = false
+
+    // MARK: - Palette (from ThemeManager)
+
+    private var palette: GamePalette { ThemeManager.shared.gamePalette }
+
+    private enum TextureName {
+        static let playerUp = "player_up"
+        static let playerDown = "player_down"
+        static let playerLeft = "player_left"
+        static let playerRight = "player_right"
+        static let box = "box"
+        static let boxOnGoal = "box_on_goal"
+    }
+
+    // MARK: - Lifecycle
+
+    override func didMove(to view: SKView) {
+        backgroundColor = palette.outer
+        anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        setupGestures(in: view)
+        layoutGrid()
+    }
+
+    override func didChangeSize(_ oldSize: CGSize) {
+        super.didChangeSize(oldSize)
+        guard size != .zero else { return }
+        layoutGrid()
+    }
+
+    // MARK: - Grid Layout
+
+    private func layoutGrid() {
+        guard let manager = gameManager else { return }
+
+        removeAllChildren()
+        tileNodes = []
+        previousGrid = []
+
+        let cols = GameState.columns
+        let rows = GameState.rows
+        tileSize = floor(min(size.width / CGFloat(cols), size.height / CGFloat(rows)))
+
+        let gridW = tileSize * CGFloat(cols)
+        let gridH = tileSize * CGFloat(rows)
+        gridOrigin = CGPoint(x: -gridW / 2, y: gridH / 2)
+
+        let state = manager.state
+
+        for r in 0..<rows {
+            var rowNodes: [SKSpriteNode] = []
+            for c in 0..<cols {
+                let tile = state.grid[r][c]
+                let node = makeTileNode(tile, row: r, col: c)
+                node.position = positionForCell(row: r, col: c)
+                addChild(node)
+                rowNodes.append(node)
+            }
+            tileNodes.append(rowNodes)
+        }
+        previousGrid = state.grid
+
+        playerNode = makePlayerNode()
+        playerNode.position = positionForCell(
+            row: state.playerPosition.row,
+            col: state.playerPosition.col
+        )
+        addChild(playerNode)
+    }
+
+    private func positionForCell(row: Int, col: Int) -> CGPoint {
+        CGPoint(
+            x: gridOrigin.x + CGFloat(col) * tileSize + tileSize / 2,
+            y: gridOrigin.y - CGFloat(row) * tileSize - tileSize / 2
+        )
+    }
+
+    // MARK: - Tile Drawing
+
+    private func makeTileNode(_ tile: Tile, row: Int, col: Int) -> SKSpriteNode {
+        let container = SKSpriteNode(color: .clear, size: CGSize(width: tileSize, height: tileSize))
+        container.zPosition = tile.isBox ? 5 : 1
+        decorateTile(container, tile: tile, row: row, col: col)
+        return container
+    }
+
+    private func decorateTile(_ node: SKSpriteNode, tile: Tile, row: Int, col: Int) {
+        let s = tileSize
+        switch tile {
+        case .wall:
+            drawWall(on: node, size: s)
+        case .floor, .player:
+            drawFloor(on: node, size: s)
+        case .playerOnGoal, .goal:
+            drawFloor(on: node, size: s)
+            drawGoalMarker(on: node, size: s)
+        case .box:
+            drawFloor(on: node, size: s)
+            drawBox(on: node, size: s, onGoal: false)
+        case .boxOnGoal:
+            drawFloor(on: node, size: s)
+            drawGoalMarker(on: node, size: s)
+            drawBox(on: node, size: s, onGoal: true)
+        }
+    }
+
+    private func makeBoxNode(onGoal: Bool) -> SKSpriteNode {
+        let container = SKSpriteNode(color: .clear, size: CGSize(width: tileSize, height: tileSize))
+        container.zPosition = 5
+        drawBox(on: container, size: tileSize, onGoal: onGoal)
+        return container
+    }
+
+    private func drawWall(on node: SKSpriteNode, size s: CGFloat) {
+        // macOS-style: clean raised block with subtle bevel, no brick mortar
+        let base = SKSpriteNode(color: palette.wallMortar, size: CGSize(width: s, height: s))
+        base.zPosition = 0.01
+        node.addChild(base)
+
+        let inset = max(1.5, s * 0.04)
+        let bs = s - inset * 2
+        let cr = max(2, bs * 0.12)
+
+        // Main stone face
+        let facePath = UIBezierPath(roundedRect:
+            CGRect(x: -bs / 2, y: -bs / 2, width: bs, height: bs), cornerRadius: cr)
+        let face = SKShapeNode(path: facePath.cgPath)
+        face.fillColor = palette.wallBase
+        face.strokeColor = .clear
+        face.zPosition = 0.02
+        node.addChild(face)
+
+        // Top highlight edge (bevel light)
+        let hlH = max(1.5, bs * 0.14)
+        let hlPath = UIBezierPath(roundedRect:
+            CGRect(x: -bs / 2 + cr * 0.3, y: bs / 2 - hlH, width: bs - cr * 0.6, height: hlH),
+            cornerRadius: cr * 0.5)
+        let hl = SKShapeNode(path: hlPath.cgPath)
+        hl.fillColor = palette.wallLight.withAlphaComponent(0.6)
+        hl.strokeColor = .clear
+        hl.zPosition = 0.03
+        node.addChild(hl)
+
+        // Bottom shadow edge (bevel dark)
+        let shH = max(1.5, bs * 0.10)
+        let shPath = UIBezierPath(roundedRect:
+            CGRect(x: -bs / 2 + cr * 0.3, y: -bs / 2, width: bs - cr * 0.6, height: shH),
+            cornerRadius: cr * 0.5)
+        let sh = SKShapeNode(path: shPath.cgPath)
+        sh.fillColor = palette.wallMortar.withAlphaComponent(0.45)
+        sh.strokeColor = .clear
+        sh.zPosition = 0.03
+        node.addChild(sh)
+
+        // Subtle inner glow
+        let glowPath = UIBezierPath(roundedRect:
+            CGRect(x: -bs * 0.3, y: -bs * 0.15, width: bs * 0.6, height: bs * 0.35),
+            cornerRadius: cr * 0.4)
+        let glow = SKShapeNode(path: glowPath.cgPath)
+        glow.fillColor = UIColor(white: 1.0, alpha: 0.06)
+        glow.strokeColor = .clear
+        glow.zPosition = 0.04
+        node.addChild(glow)
+    }
+
+    private func drawFloor(on node: SKSpriteNode, size s: CGFloat) {
+        let bg = SKSpriteNode(color: palette.floor, size: CGSize(width: s, height: s))
+        bg.zPosition = 0.01
+        node.addChild(bg)
+
+        let lineW = max(1, s * 0.02)
+        let step = floor(s / 4)
+        for i in 1..<4 {
+            let pos = -s / 2 + CGFloat(i) * step
+            let v = SKSpriteNode(color: palette.floorLine, size: CGSize(width: lineW, height: s))
+            v.position = CGPoint(x: pos, y: 0)
+            v.zPosition = 0.02
+            node.addChild(v)
+            let h = SKSpriteNode(color: palette.floorLine, size: CGSize(width: s, height: lineW))
+            h.position = CGPoint(x: 0, y: pos)
+            h.zPosition = 0.02
+            node.addChild(h)
+        }
+    }
+
+    private func drawGoalMarker(on node: SKSpriteNode, size s: CGFloat) {
+        // Outer soft glow ring
+        let outerR = s * 0.30
+        let glow = SKShapeNode(circleOfRadius: outerR)
+        glow.fillColor = palette.goalRing.withAlphaComponent(0.12)
+        glow.strokeColor = .clear
+        glow.zPosition = 0.04
+        node.addChild(glow)
+
+        // Diamond marker
+        let dm = s * 0.16
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: 0, y: dm))
+        path.addLine(to: CGPoint(x: dm, y: 0))
+        path.addLine(to: CGPoint(x: 0, y: -dm))
+        path.addLine(to: CGPoint(x: -dm, y: 0))
+        path.closeSubpath()
+        let diamond = SKShapeNode(path: path)
+        diamond.fillColor = palette.goalRing.withAlphaComponent(0.85)
+        diamond.strokeColor = palette.goalRing
+        diamond.lineWidth = max(1, s * 0.03)
+        diamond.zPosition = 0.06
+        node.addChild(diamond)
+
+        // Subtle corner dots
+        let dotR = max(1.5, s * 0.025)
+        let offset = s * 0.30
+        for pos in [CGPoint(x: -offset, y: -offset), CGPoint(x: offset, y: -offset),
+                    CGPoint(x: -offset, y: offset), CGPoint(x: offset, y: offset)] {
+            let dot = SKShapeNode(circleOfRadius: dotR)
+            dot.fillColor = palette.goalRing.withAlphaComponent(0.4)
+            dot.strokeColor = .clear
+            dot.position = pos
+            dot.zPosition = 0.05
+            node.addChild(dot)
+        }
+    }
+
+    private func drawBox(on node: SKSpriteNode, size s: CGFloat, onGoal: Bool) {
+        let textureName = onGoal ? TextureName.boxOnGoal : TextureName.box
+        if let texture = textureOrNil(named: textureName) {
+            let inset = s * 0.08
+            let box = SKSpriteNode(texture: texture, size: CGSize(width: s - 2 * inset, height: s - 2 * inset))
+            box.zPosition = 0.10
+            node.addChild(box)
+            return
+        }
+
+        drawBoxFallback(on: node, size: s, onGoal: onGoal)
+    }
+
+    private func drawBoxFallback(on node: SKSpriteNode, size s: CGFloat, onGoal: Bool) {
+        let inset = s * 0.10
+        let bs = s - 2 * inset
+        let cr = bs * 0.18 // corner radius
+
+        let topColor   = onGoal ? palette.boxGoalTop  : palette.boxTop
+        let botColor   = onGoal ? palette.boxGoalBot   : palette.boxBottom
+        let strokeColor = onGoal ? palette.boxGoalStrk : palette.boxStroke
+
+        // Drop shadow
+        let shadowPath = UIBezierPath(roundedRect:
+            CGRect(x: -bs / 2, y: -bs / 2 - bs * 0.04, width: bs, height: bs), cornerRadius: cr)
+        let shadow = SKShapeNode(path: shadowPath.cgPath)
+        shadow.fillColor = palette.boxShadow
+        shadow.strokeColor = .clear
+        shadow.zPosition = 0.09
+        node.addChild(shadow)
+
+        // Main body (upper color)
+        let bodyRect = CGRect(x: -bs / 2, y: -bs / 2, width: bs, height: bs)
+        let bodyPath = UIBezierPath(roundedRect: bodyRect, cornerRadius: cr)
+        let body = SKShapeNode(path: bodyPath.cgPath)
+        body.fillColor = topColor
+        body.strokeColor = strokeColor
+        body.lineWidth = max(1.5, s * 0.03)
+        body.zPosition = 0.10
+        node.addChild(body)
+
+        // Bottom half tint — simulates gradient
+        let halfRect = CGRect(x: -bs / 2 + bs * 0.04, y: -bs / 2 + bs * 0.04,
+                              width: bs - bs * 0.08, height: bs * 0.42)
+        let halfPath = UIBezierPath(roundedRect: halfRect,
+            byRoundingCorners: [.bottomLeft, .bottomRight],
+            cornerRadii: CGSize(width: cr * 0.8, height: cr * 0.8))
+        let half = SKShapeNode(path: halfPath.cgPath)
+        half.fillColor = botColor.withAlphaComponent(0.5)
+        half.strokeColor = .clear
+        half.zPosition = 0.11
+        node.addChild(half)
+
+        // Top highlight — glossy shine
+        let hlH = bs * 0.22
+        let hlRect = CGRect(x: -bs / 2 + bs * 0.08, y: bs / 2 - hlH - bs * 0.06,
+                            width: bs - bs * 0.16, height: hlH)
+        let hlPath = UIBezierPath(roundedRect: hlRect, cornerRadius: cr * 0.6)
+        let highlight = SKShapeNode(path: hlPath.cgPath)
+        highlight.fillColor = UIColor(white: 1.0, alpha: 0.28)
+        highlight.strokeColor = .clear
+        highlight.zPosition = 0.12
+        node.addChild(highlight)
+
+        // Center cross mark
+        let lw = max(1.5, bs * 0.04)
+        let crossLen = bs * 0.28
+        let markColor = UIColor(white: 1.0, alpha: 0.35)
+
+        let hLine = SKSpriteNode(color: markColor, size: CGSize(width: crossLen, height: lw))
+        hLine.zPosition = 0.13
+        node.addChild(hLine)
+        let vLine = SKSpriteNode(color: markColor, size: CGSize(width: lw, height: crossLen))
+        vLine.zPosition = 0.13
+        node.addChild(vLine)
+    }
+
+    // MARK: - Player Node
+
+    private func makePlayerNode() -> SKSpriteNode {
+        let container = SKSpriteNode(color: .clear, size: CGSize(width: tileSize, height: tileSize))
+        container.zPosition = 10
+
+        let textureName: String
+        switch lastDirection {
+        case .up: textureName = TextureName.playerUp
+        case .down: textureName = TextureName.playerDown
+        case .left: textureName = TextureName.playerLeft
+        case .right: textureName = TextureName.playerRight
+        }
+
+        if let texture = textureOrNil(named: textureName) {
+            container.texture = texture
+            let inset = tileSize * 0.06
+            container.size = CGSize(width: tileSize - 2 * inset, height: tileSize - 2 * inset)
+        } else {
+            drawPlayerFallback(on: container, size: tileSize)
+        }
+
+        return container
+    }
+
+    private func updatePlayerVisual(direction: Direction) {
+        let textureName: String
+        switch direction {
+        case .up: textureName = TextureName.playerUp
+        case .down: textureName = TextureName.playerDown
+        case .left: textureName = TextureName.playerLeft
+        case .right: textureName = TextureName.playerRight
+        }
+
+        if let texture = textureOrNil(named: textureName) {
+            playerNode.texture = texture
+            let inset = tileSize * 0.06
+            playerNode.size = CGSize(width: tileSize - 2 * inset, height: tileSize - 2 * inset)
+            playerNode.removeAllChildren()
+        } else {
+            playerNode.texture = nil
+            playerNode.color = .clear
+            playerNode.size = CGSize(width: tileSize, height: tileSize)
+            playerNode.removeAllChildren()
+            drawPlayerFallback(on: playerNode, size: tileSize)
+        }
+    }
+
+    private func drawPlayerFallback(on node: SKSpriteNode, size s: CGFloat) {
+        // --- Top-down human figure (bird's-eye view) ---
+
+        // Rotation so the figure "faces" lastDirection
+        let angle: CGFloat
+        switch lastDirection {
+        case .up:    angle = 0
+        case .down:  angle = .pi
+        case .left:  angle = .pi / 2
+        case .right: angle = -.pi / 2
+        }
+
+        // Wrapper rotated towards movement direction
+        let wrapper = SKNode()
+        wrapper.zRotation = angle
+        wrapper.zPosition = 0.05
+        node.addChild(wrapper)
+
+        // --- Drop shadow (slightly offset down in screen space) ---
+        let shadowOval = SKShapeNode(ellipseOf: CGSize(width: s * 0.62, height: s * 0.68))
+        shadowOval.fillColor = UIColor(white: 0, alpha: 0.16)
+        shadowOval.strokeColor = .clear
+        shadowOval.position = CGPoint(x: 0, y: -s * 0.03)
+        shadowOval.zPosition = 0.01
+        wrapper.addChild(shadowOval)
+
+        // --- Torso (oval, slightly below center) ---
+        let torsoW = s * 0.44
+        let torsoH = s * 0.38
+        let torsoY: CGFloat = -s * 0.08
+        let torsoPath = UIBezierPath(roundedRect:
+            CGRect(x: -torsoW / 2, y: torsoY - torsoH / 2, width: torsoW, height: torsoH),
+            cornerRadius: torsoW * 0.35)
+        let torso = SKShapeNode(path: torsoPath.cgPath)
+        torso.fillColor = palette.playerBot
+        torso.strokeColor = palette.playerStroke
+        torso.lineWidth = max(1.2, s * 0.025)
+        torso.zPosition = 0.10
+        wrapper.addChild(torso)
+
+        // Torso highlight stripe
+        let stripeW = torsoW * 0.25
+        let stripeH = torsoH * 0.6
+        let stripe = SKShapeNode(path: UIBezierPath(roundedRect:
+            CGRect(x: -stripeW / 2, y: torsoY - stripeH / 2, width: stripeW, height: stripeH),
+            cornerRadius: stripeW * 0.4).cgPath)
+        stripe.fillColor = UIColor(white: 1, alpha: 0.12)
+        stripe.strokeColor = .clear
+        stripe.zPosition = 0.11
+        wrapper.addChild(stripe)
+
+        // --- Shoulders / arms (two small ovals on the sides) ---
+        let armW = s * 0.14
+        let armH = s * 0.22
+        let armY = torsoY + torsoH * 0.05
+        for side: CGFloat in [-1, 1] {
+            let armX = side * (torsoW / 2 + armW * 0.20)
+            let armPath = UIBezierPath(ovalIn:
+                CGRect(x: armX - armW / 2, y: armY - armH / 2, width: armW, height: armH))
+            let arm = SKShapeNode(path: armPath.cgPath)
+            arm.fillColor = palette.playerBot
+            arm.strokeColor = palette.playerStroke
+            arm.lineWidth = max(1, s * 0.02)
+            arm.zPosition = 0.09
+            wrapper.addChild(arm)
+        }
+
+        // --- Head (circle, upper part) ---
+        let headR = s * 0.19
+        let headY = s * 0.14
+        let head = SKShapeNode(circleOfRadius: headR)
+        head.fillColor = palette.playerTop
+        head.strokeColor = palette.playerStroke
+        head.lineWidth = max(1.5, s * 0.03)
+        head.position = CGPoint(x: 0, y: headY)
+        head.zPosition = 0.20
+        wrapper.addChild(head)
+
+        // Head top highlight (gloss)
+        let glossR = headR * 0.55
+        let glossPath = CGMutablePath()
+        glossPath.addArc(center: CGPoint(x: 0, y: headY + headR * 0.15),
+                         radius: glossR,
+                         startAngle: .pi * 1.1, endAngle: .pi * 1.9, clockwise: false)
+        glossPath.closeSubpath()
+        let gloss = SKShapeNode(path: glossPath)
+        gloss.fillColor = UIColor(white: 1, alpha: 0.30)
+        gloss.strokeColor = .clear
+        gloss.zPosition = 0.22
+        wrapper.addChild(gloss)
+
+        // Hair parting line (subtle arc on top of head)
+        let hairPath = CGMutablePath()
+        hairPath.addArc(center: CGPoint(x: 0, y: headY),
+                        radius: headR * 0.75,
+                        startAngle: .pi * 1.25, endAngle: .pi * 1.75, clockwise: false)
+        let hair = SKShapeNode(path: hairPath)
+        hair.strokeColor = palette.playerStroke.withAlphaComponent(0.3)
+        hair.lineWidth = max(1, s * 0.02)
+        hair.lineCap = .round
+        hair.fillColor = .clear
+        hair.zPosition = 0.23
+        wrapper.addChild(hair)
+
+        // --- Direction indicator (small triangle "nose" pointing forward) ---
+        let triSize = s * 0.06
+        let triY = headY + headR + triSize * 0.4
+        let triPath = CGMutablePath()
+        triPath.move(to: CGPoint(x: 0, y: triY + triSize))
+        triPath.addLine(to: CGPoint(x: -triSize * 0.7, y: triY))
+        triPath.addLine(to: CGPoint(x: triSize * 0.7, y: triY))
+        triPath.closeSubpath()
+        let tri = SKShapeNode(path: triPath)
+        tri.fillColor = palette.playerTop
+        tri.strokeColor = palette.playerStroke
+        tri.lineWidth = max(1, s * 0.02)
+        tri.zPosition = 0.24
+        wrapper.addChild(tri)
+
+        // --- Feet (two small circles at bottom) ---
+        let footR = s * 0.065
+        let footY = torsoY - torsoH / 2 - footR * 0.6
+        for side: CGFloat in [-1, 1] {
+            let foot = SKShapeNode(circleOfRadius: footR)
+            foot.fillColor = palette.playerPupil
+            foot.strokeColor = palette.playerStroke.withAlphaComponent(0.4)
+            foot.lineWidth = max(0.8, s * 0.015)
+            foot.position = CGPoint(x: side * s * 0.10, y: footY)
+            foot.zPosition = 0.08
+            wrapper.addChild(foot)
+        }
+    }
+
+    private func textureOrNil(named name: String) -> SKTexture? {
+        guard let image = UIImage(named: name) else { return nil }
+        return SKTexture(image: image)
+    }
+
+    // MARK: - Visual Updates
+
+    func refreshAfterMove(direction: Direction, pushed: Bool) {
+        guard let manager = gameManager else { return }
+        lastDirection = direction
+        manager.isAnimating = true
+
+        updatePlayerVisual(direction: direction)
+
+        if pushed {
+            SoundManager.shared.playPush()
+            HapticsManager.shared.boxPushed()
+            let boxOldPos = manager.state.playerPosition
+            let boxNewPos = boxOldPos.moved(direction)
+            animateBoxSlide(from: boxOldPos, to: boxNewPos, state: manager.state)
+        } else {
+            SoundManager.shared.playStep()
+            HapticsManager.shared.playerMoved()
+        }
+
+        updateChangedTiles()
+
+        let state = manager.state
+        let target = positionForCell(row: state.playerPosition.row, col: state.playerPosition.col)
+        let move = SKAction.move(to: target, duration: animationDuration)
+        move.timingMode = .easeOut
+
+        let squish = SKAction.scaleY(to: 0.92, duration: 0.06)
+        squish.timingMode = .easeOut
+        let unsquish = SKAction.scaleY(to: 1.0, duration: 0.08)
+        unsquish.timingMode = .easeOut
+        let bounce = SKAction.sequence([squish, unsquish])
+
+        playerNode.run(move) { [weak self] in
+            self?.playerNode.run(bounce)
+            self?.gameManager?.isAnimating = false
+        }
+    }
+
+    func refreshFullBoard() {
+        layoutGrid()
+    }
+
+    private func updateChangedTiles() {
+        guard let manager = gameManager else { return }
+        let grid = manager.state.grid
+
+        for r in 0..<GameState.rows {
+            for c in 0..<GameState.columns {
+                let tile = grid[r][c]
+                guard previousGrid.isEmpty || previousGrid[r][c] != tile else { continue }
+                let node = tileNodes[r][c]
+                node.removeAllChildren()
+                let baseTile: Tile = tile.isBox ? (tile == .boxOnGoal ? .goal : .floor) : tile
+                decorateTile(node, tile: baseTile, row: r, col: c)
+                node.zPosition = 1
+            }
+        }
+        previousGrid = grid
+    }
+
+    private func updatePlayerIndicator(direction: Direction) {
+        updatePlayerVisual(direction: direction)
+    }
+
+    // MARK: - Level Completion Celebration
+
+    func showLevelCompleteCelebration() {
+        let colors: [UIColor] = [
+            UIColor(red: 1.0, green: 0.84, blue: 0.0, alpha: 1),
+            UIColor(red: 0.3, green: 0.85, blue: 0.4, alpha: 1),
+            UIColor(red: 0.3, green: 0.6, blue: 1.0, alpha: 1),
+            UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1),
+            UIColor(red: 0.9, green: 0.5, blue: 1.0, alpha: 1),
+        ]
+
+        let texSize = CGSize(width: 8, height: 8)
+        let renderer = UIGraphicsImageRenderer(size: texSize)
+        let texImage = renderer.image { ctx in
+            UIColor.white.setFill()
+            ctx.fill(CGRect(origin: .zero, size: texSize))
+        }
+        let texture = SKTexture(image: texImage)
+
+        for i in 0..<5 {
+            let emitter = SKEmitterNode()
+            emitter.particleBirthRate = 80
+            emitter.numParticlesToEmit = 40
+            emitter.particleLifetime = 1.5
+            emitter.particleLifetimeRange = 0.5
+            emitter.emissionAngleRange = .pi * 2
+            emitter.particleSpeed = 200
+            emitter.particleSpeedRange = 100
+            emitter.particleAlpha = 1.0
+            emitter.particleAlphaSpeed = -0.7
+            emitter.particleScale = 0.15
+            emitter.particleScaleRange = 0.1
+            emitter.particleScaleSpeed = -0.05
+            emitter.particleColor = colors[i]
+            emitter.particleColorBlendFactor = 1.0
+            emitter.particleBlendMode = .add
+            emitter.particleTexture = texture
+            emitter.yAcceleration = -200
+            emitter.position = CGPoint(
+                x: CGFloat.random(in: -size.width * 0.35...size.width * 0.35),
+                y: CGFloat.random(in: 0...size.height * 0.4)
+            )
+            emitter.zPosition = 100
+            emitter.name = "celebration"
+
+            let delay = SKAction.wait(forDuration: Double(i) * 0.2)
+            run(SKAction.sequence([
+                delay,
+                .run { [weak self] in self?.addChild(emitter) },
+                .wait(forDuration: 3.0),
+                .run { emitter.removeFromParent() }
+            ]))
+        }
+
+        let label = SKLabelNode(text: "LEVEL COMPLETE!")
+        label.fontName = "AvenirNext-Bold"
+        label.fontSize = min(size.width / 10, 60)
+        label.fontColor = UIColor(red: 1, green: 0.9, blue: 0.3, alpha: 1)
+        label.position = CGPoint(x: 0, y: size.height * 0.15)
+        label.zPosition = 101
+        label.alpha = 0
+        label.setScale(0.3)
+        label.name = "celebration"
+
+        let shadow = SKLabelNode(text: label.text ?? "")
+        shadow.fontName = label.fontName
+        shadow.fontSize = label.fontSize
+        shadow.fontColor = UIColor(white: 0, alpha: 0.4)
+        shadow.position = CGPoint(x: 2, y: -2)
+        shadow.zPosition = -0.1
+        label.addChild(shadow)
+        addChild(label)
+
+        label.run(.group([
+            .scale(to: 1, duration: 0.4),
+            .fadeIn(withDuration: 0.3)
+        ]))
+        let pulse = SKAction.sequence([
+            .scale(to: 1.08, duration: 0.6),
+            .scale(to: 1.0, duration: 0.6)
+        ])
+        label.run(.sequence([.wait(forDuration: 0.5), .repeatForever(pulse)]))
+
+        SoundManager.shared.playLevelComplete()
+        HapticsManager.shared.levelCompleted()
+    }
+
+    func clearCelebration() {
+        enumerateChildNodes(withName: "celebration") { node, _ in
+            node.removeFromParent()
+        }
+    }
+
+    // MARK: - Input Handling
+
+    private func setupGestures(in view: SKView) {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        view.addGestureRecognizer(tap)
+
+        for dir: UISwipeGestureRecognizer.Direction in [.up, .down, .left, .right] {
+            let swipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+            swipe.direction = dir
+            view.addGestureRecognizer(swipe)
+        }
+    }
+
+    private func directionFromSwipe(_ dir: UISwipeGestureRecognizer.Direction) -> Direction? {
+        switch dir {
+        case .up:    return .up
+        case .down:  return .down
+        case .left:  return .left
+        case .right: return .right
+        default:     return nil
+        }
+    }
+
+    @objc private func handleSwipe(_ gesture: UISwipeGestureRecognizer) {
+        guard let manager = gameManager,
+              !manager.isAnimating, !isMovingAlongPath,
+              let direction = directionFromSwipe(gesture.direction) else { return }
+        performMove(direction, on: manager)
+    }
+
+    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
+        guard gesture.state == .ended,
+              let manager = gameManager,
+              !manager.isAnimating, !isMovingAlongPath,
+              let view = self.view else { return }
+
+        let loc = convertPoint(fromView: gesture.location(in: view))
+        let col = Int(floor((loc.x - gridOrigin.x) / tileSize))
+        let row = Int(floor((gridOrigin.y - loc.y) / tileSize))
+
+        guard row >= 0, row < GameState.rows,
+              col >= 0, col < GameState.columns else { return }
+
+        let target = Position(row: row, col: col)
+
+        if let push = manager.state.findBoxPush(to: target) {
+            pushBoxAlongPath(direction: push.direction, remainingSteps: push.steps)
+            return
+        }
+
+        guard let path = manager.state.findPath(to: target), !path.isEmpty else { return }
+        moveAlongPath(path, stepIndex: 0)
+    }
+
+    /// Called from the SwiftUI D-pad overlay.
+    func performMoveFromDPad(_ direction: Direction) {
+        guard let manager = gameManager,
+              !manager.isAnimating, !isMovingAlongPath else { return }
+        performMove(direction, on: manager)
+    }
+
+    /// Centralised move handling — eliminates duplication across swipe/keyboard/tap.
+    private func performMove(_ direction: Direction, on manager: GameManager) {
+        let result = manager.tryMove(direction)
+        switch result {
+        case .moved:
+            refreshAfterMove(direction: direction, pushed: false)
+        case .pushed:
+            refreshAfterMove(direction: direction, pushed: true)
+            handleLevelCompleteIfNeeded(manager)
+        case .blocked:
+            SoundManager.shared.playBlocked()
+            HapticsManager.shared.blocked()
+        }
+    }
+
+    private func handleLevelCompleteIfNeeded(_ manager: GameManager) {
+        guard manager.isLevelComplete else { return }
+        PersistenceManager.shared.markLevelCompleted(
+            manager.state.levelIndex, moves: manager.state.moveCount
+        )
+        showLevelCompleteCelebration()
+    }
+
+    // MARK: - Path Walking
+
+    private func moveAlongPath(_ path: [Direction], stepIndex: Int) {
+        guard stepIndex < path.count,
+              let manager = gameManager,
+              !manager.isLevelComplete else {
+            isMovingAlongPath = false
+            return
+        }
+
+        isMovingAlongPath = true
+        let direction = path[stepIndex]
+
+        guard case .moved = manager.tryMove(direction) else {
+            isMovingAlongPath = false
+            return
+        }
+
+        lastDirection = direction
+        updatePlayerIndicator(direction: direction)
+        manager.isAnimating = true
+        SoundManager.shared.playStep()
+        HapticsManager.shared.playerMoved()
+        updateChangedTiles()
+
+        let target = positionForCell(
+            row: manager.state.playerPosition.row,
+            col: manager.state.playerPosition.col
+        )
+        let move = SKAction.move(to: target, duration: animationDuration)
+        move.timingMode = .easeOut
+        playerNode.run(move) { [weak self] in
+            manager.isAnimating = false
+            self?.moveAlongPath(path, stepIndex: stepIndex + 1)
+        }
+    }
+
+    private func pushBoxAlongPath(direction: Direction, remainingSteps: Int) {
+        guard remainingSteps > 0,
+              let manager = gameManager,
+              !manager.isLevelComplete else {
+            isMovingAlongPath = false
+            return
+        }
+
+        isMovingAlongPath = true
+
+        guard case .pushed = manager.tryMove(direction) else {
+            isMovingAlongPath = false
+            return
+        }
+
+        lastDirection = direction
+        updatePlayerIndicator(direction: direction)
+        manager.isAnimating = true
+        SoundManager.shared.playPush()
+        HapticsManager.shared.boxPushed()
+
+        let boxOldPos = manager.state.playerPosition
+        let boxNewPos = boxOldPos.moved(direction)
+        animateBoxSlide(from: boxOldPos, to: boxNewPos, state: manager.state)
+
+        let boxOldPos = manager.state.playerPosition
+        let boxNewPos = boxOldPos.moved(direction)
+        animateBoxSlide(from: boxOldPos, to: boxNewPos, state: manager.state)
+        updateChangedTiles()
+
+        let target = positionForCell(
+            row: manager.state.playerPosition.row,
+            col: manager.state.playerPosition.col
+        )
+        let move = SKAction.move(to: target, duration: animationDuration)
+        move.timingMode = .easeOut
+        playerNode.run(move) { [weak self] in
+            manager.isAnimating = false
+            if manager.isLevelComplete {
+                self?.handleLevelCompleteIfNeeded(manager)
+                self?.isMovingAlongPath = false
+            } else {
+                self?.pushBoxAlongPath(direction: direction, remainingSteps: remainingSteps - 1)
+            }
+        }
+    }
+
+    // MARK: - Keyboard
+
+    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        guard let manager = gameManager,
+              !manager.isAnimating, !isMovingAlongPath else {
+            super.pressesBegan(presses, with: event)
+            return
+        }
+
+        for press in presses {
+            guard let key = press.key else { continue }
+
+            if key.modifierFlags.contains(.command),
+               key.charactersIgnoringModifiers == "z" {
+                manager.undo()
+                refreshFullBoard()
+                return
+            }
+
+            let direction: Direction?
+            switch key.keyCode {
+            case .keyboardUpArrow:    direction = .up
+            case .keyboardDownArrow:  direction = .down
+            case .keyboardLeftArrow:  direction = .left
+            case .keyboardRightArrow: direction = .right
+            default:                  direction = nil
+            }
+
+            if let dir = direction {
+                performMove(dir, on: manager)
+                return
+            }
+        }
+        super.pressesBegan(presses, with: event)
+    }
+}
