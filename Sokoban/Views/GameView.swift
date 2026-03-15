@@ -89,14 +89,16 @@ struct GameView: View {
             }
         }
         .navigationBarHidden(true)
-        .alert("Level Complete!", isPresented: $showLevelComplete) {
+        .alert("Level Complete! 🎉", isPresented: $showLevelComplete) {
             if gameManager.hasNextLevel {
                 Button("Next Level") {
+                    scene.clearCelebration()
                     gameManager.advanceToNextLevel()
                     scene.refreshFullBoard()
                 }
             }
             Button("Level Select") {
+                scene.clearCelebration()
                 dismiss()
             }
         } message: {

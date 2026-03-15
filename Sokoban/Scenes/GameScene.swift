@@ -124,8 +124,6 @@ final class GameScene: SKScene {
         }
     }
 
-    // MARK: - Draw Wall (3D brick pattern)
-
     private func drawWall(on node: SKSpriteNode, size s: CGFloat, row: Int, col: Int) {
         let base = SKSpriteNode(color: wallMortar, size: CGSize(width: s, height: s))
         base.zPosition = 0.01
@@ -168,8 +166,6 @@ final class GameScene: SKScene {
         }
     }
 
-    // MARK: - Draw Floor (subtle stone texture)
-
     private func drawFloor(on node: SKSpriteNode, size s: CGFloat) {
         let bg = SKSpriteNode(color: floorColor, size: CGSize(width: s, height: s))
         bg.zPosition = 0.01
@@ -190,8 +186,6 @@ final class GameScene: SKScene {
             node.addChild(hLine)
         }
     }
-
-    // MARK: - Draw Goal Marker (red square frame + diamond)
 
     private func drawGoalMarker(on node: SKSpriteNode, size s: CGFloat) {
         let m = s * 0.22
@@ -219,8 +213,6 @@ final class GameScene: SKScene {
         diamond.zPosition = 0.06
         node.addChild(diamond)
     }
-
-    // MARK: - Draw Box (wooden crate with 3D edges and plank pattern)
 
     private func drawBox(on node: SKSpriteNode, size s: CGFloat, onGoal: Bool) {
         let inset = s * 0.10
@@ -276,7 +268,7 @@ final class GameScene: SKScene {
         }
     }
 
-    // MARK: - Create Player Node (character with hat, face, body)
+    // MARK: - Create Player Node
 
     private func makePlayerNode() -> SKSpriteNode {
         let container = SKSpriteNode(color: .clear, size: CGSize(width: tileSize, height: tileSize))
@@ -371,6 +363,15 @@ final class GameScene: SKScene {
         let targetPos = positionForCell(row: state.playerPosition.row, col: state.playerPosition.col)
         updatePlayerIndicator(direction: direction)
 
+        // Play sound effects
+        if pushed {
+            SoundManager.shared.playPush()
+            HapticsManager.shared.boxPushed()
+        } else {
+            SoundManager.shared.playStep()
+            HapticsManager.shared.playerMoved()
+        }
+
         let moveAction = SKAction.move(to: targetPos, duration: animationDuration)
         moveAction.timingMode = .easeOut
         playerNode.run(moveAction) { [weak self] in
@@ -390,6 +391,116 @@ final class GameScene: SKScene {
         case .down: indicator.position = CGPoint(x: 0, y: -offset)
         case .left: indicator.position = CGPoint(x: -offset, y: 0)
         case .right: indicator.position = CGPoint(x: offset, y: 0)
+        }
+    }
+
+    // MARK: - Level Completion Celebration
+
+    func showLevelCompleteCelebration() {
+        // Firework-style particle emitters
+        let colors: [UIColor] = [
+            UIColor(red: 1.0, green: 0.84, blue: 0.0, alpha: 1.0),   // Gold
+            UIColor(red: 0.3, green: 0.85, blue: 0.4, alpha: 1.0),   // Green
+            UIColor(red: 0.3, green: 0.6, blue: 1.0, alpha: 1.0),    // Blue
+            UIColor(red: 1.0, green: 0.4, blue: 0.4, alpha: 1.0),    // Red
+            UIColor(red: 0.9, green: 0.5, blue: 1.0, alpha: 1.0),    // Purple
+        ]
+
+        for i in 0..<5 {
+            let emitter = SKEmitterNode()
+            emitter.particleBirthRate = 80
+            emitter.numParticlesToEmit = 40
+            emitter.particleLifetime = 1.5
+            emitter.particleLifetimeRange = 0.5
+            emitter.emissionAngleRange = CGFloat.pi * 2
+            emitter.particleSpeed = 200
+            emitter.particleSpeedRange = 100
+            emitter.particleAlpha = 1.0
+            emitter.particleAlphaSpeed = -0.7
+            emitter.particleScale = 0.15
+            emitter.particleScaleRange = 0.1
+            emitter.particleScaleSpeed = -0.05
+            emitter.particleColor = colors[i % colors.count]
+            emitter.particleColorBlendFactor = 1.0
+            emitter.particleBlendMode = .add
+
+            // Create a small white square texture
+            let texSize = CGSize(width: 8, height: 8)
+            let renderer = UIGraphicsImageRenderer(size: texSize)
+            let texImage = renderer.image { ctx in
+                UIColor.white.setFill()
+                ctx.fill(CGRect(origin: .zero, size: texSize))
+            }
+            emitter.particleTexture = SKTexture(image: texImage)
+
+            // Gravity effect
+            emitter.yAcceleration = -200
+
+            let xRange = size.width * 0.7
+            let yRange = size.height * 0.4
+            emitter.position = CGPoint(
+                x: CGFloat.random(in: -xRange/2...xRange/2),
+                y: CGFloat.random(in: 0...yRange)
+            )
+            emitter.zPosition = 100
+            emitter.name = "celebration"
+
+            // Stagger the bursts
+            let delay = SKAction.wait(forDuration: Double(i) * 0.2)
+            let addEmitter = SKAction.run { [weak self] in
+                self?.addChild(emitter)
+            }
+            let wait = SKAction.wait(forDuration: 3.0)
+            let remove = SKAction.run {
+                emitter.removeFromParent()
+            }
+            run(SKAction.sequence([delay, addEmitter, wait, remove]))
+        }
+
+        // "LEVEL COMPLETE!" label
+        let label = SKLabelNode(text: "LEVEL COMPLETE!")
+        label.fontName = "AvenirNext-Bold"
+        label.fontSize = min(size.width / 10, 60)
+        label.fontColor = UIColor(red: 1.0, green: 0.9, blue: 0.3, alpha: 1.0)
+        label.position = CGPoint(x: 0, y: size.height * 0.15)
+        label.zPosition = 101
+        label.alpha = 0
+        label.setScale(0.3)
+        label.name = "celebration"
+        addChild(label)
+
+        // Shadow label
+        let shadow = SKLabelNode(text: "LEVEL COMPLETE!")
+        shadow.fontName = "AvenirNext-Bold"
+        shadow.fontSize = label.fontSize
+        shadow.fontColor = UIColor(white: 0.0, alpha: 0.4)
+        shadow.position = CGPoint(x: 2, y: -2)
+        shadow.zPosition = -0.1
+        label.addChild(shadow)
+
+        // Animate label in
+        let scaleUp = SKAction.scale(to: 1.0, duration: 0.4)
+        scaleUp.timingMode = .easeOut
+        let fadeIn = SKAction.fadeIn(withDuration: 0.3)
+        label.run(SKAction.group([scaleUp, fadeIn]))
+
+        // Pulsing glow
+        let pulseUp = SKAction.scale(to: 1.08, duration: 0.6)
+        pulseUp.timingMode = .easeInEaseOut
+        let pulseDown = SKAction.scale(to: 1.0, duration: 0.6)
+        pulseDown.timingMode = .easeInEaseOut
+        let pulse = SKAction.sequence([pulseUp, pulseDown])
+        let pulseDelay = SKAction.wait(forDuration: 0.5)
+        label.run(SKAction.sequence([pulseDelay, SKAction.repeatForever(pulse)]))
+
+        // Sound + haptics
+        SoundManager.shared.playLevelComplete()
+        HapticsManager.shared.levelCompleted()
+    }
+
+    func clearCelebration() {
+        enumerateChildNodes(withName: "celebration") { node, _ in
+            node.removeFromParent()
         }
     }
 
@@ -426,9 +537,11 @@ final class GameScene: SKScene {
             refreshAfterMove(direction: direction, pushed: true)
             if manager.isLevelComplete {
                 PersistenceManager.shared.markLevelCompleted(manager.state.levelIndex, moves: manager.state.moveCount)
+                showLevelCompleteCelebration()
             }
         case .blocked:
-            break
+            SoundManager.shared.playBlocked()
+            HapticsManager.shared.blocked()
         }
     }
 
@@ -480,6 +593,9 @@ final class GameScene: SKScene {
             updatePlayerIndicator(direction: direction)
             manager.isAnimating = true
 
+            SoundManager.shared.playStep()
+            HapticsManager.shared.playerMoved()
+
             updateTileVisuals()
 
             let targetPos = positionForCell(row: manager.state.playerPosition.row, col: manager.state.playerPosition.col)
@@ -513,6 +629,9 @@ final class GameScene: SKScene {
             updatePlayerIndicator(direction: direction)
             manager.isAnimating = true
 
+            SoundManager.shared.playPush()
+            HapticsManager.shared.boxPushed()
+
             updateTileVisuals()
 
             let targetPos = positionForCell(row: manager.state.playerPosition.row, col: manager.state.playerPosition.col)
@@ -523,6 +642,7 @@ final class GameScene: SKScene {
                 manager.isAnimating = false
                 if manager.isLevelComplete {
                     PersistenceManager.shared.markLevelCompleted(manager.state.levelIndex, moves: manager.state.moveCount)
+                    self?.showLevelCompleteCelebration()
                     self?.isMovingAlongPath = false
                 } else {
                     self?.pushBoxAlongPath(direction: direction, remainingSteps: remainingSteps - 1)
@@ -584,9 +704,11 @@ final class GameScene: SKScene {
                     refreshAfterMove(direction: dir, pushed: true)
                     if manager.isLevelComplete {
                         PersistenceManager.shared.markLevelCompleted(manager.state.levelIndex, moves: manager.state.moveCount)
+                        showLevelCompleteCelebration()
                     }
                 case .blocked:
-                    break
+                    SoundManager.shared.playBlocked()
+                    HapticsManager.shared.blocked()
                 }
                 return
             }

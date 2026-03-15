@@ -21,6 +21,9 @@
         E7D2C80A0EF146FF8AB527E1 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFD7EDF122A453B9D68F0E5; };
         C1DDA77FE9834C9AAD178C4F /* Levels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 02646E9BAFE14E5BBDA96E7B; };
 		AA1234567890ABCD12345678 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB1234567890ABCD12345678; };
+		DD112233445566778899AABB /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC112233445566778899AABB; };
+		FF112233445566778899AABB /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE112233445566778899AABB; };
+		BB223344556677889900BBCC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA223344556677889900BBCC; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +42,9 @@
         02646E9BAFE14E5BBDA96E7B /* Levels.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Levels.txt; sourceTree = "<group>"; };
         BB1234567890ABCD12345678 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
         B886EE1C6B514222BF3C53E4 /* Sokoban.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sokoban.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC112233445566778899AABB /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		EE112233445566778899AABB /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
+		AA223344556677889900BBCC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,8 @@
                 19E4E55836D642B1AE0CBCAB /* LevelManager.swift */,
                 19B8D79C9AE34B3D8A3631BE /* GameManager.swift */,
                 0923CC8A789D4C35BB325428 /* PersistenceManager.swift */,
+				CC112233445566778899AABB /* SoundManager.swift */,
+				EE112233445566778899AABB /* HapticsManager.swift */,
             );
             path = Managers;
             sourceTree = "<group>";
@@ -100,6 +108,7 @@
                 C25E21E0BD554310A532FAE5 /* GameView.swift */,
                 B5F715DAE2524482924BEBC2 /* LevelSelectView.swift */,
                 CBFD7EDF122A453B9D68F0E5 /* AboutView.swift */,
+				AA223344556677889900BBCC /* SettingsView.swift */,
             );
             path = Views;
             sourceTree = "<group>";
@@ -206,6 +215,9 @@
                 BE166F6D26794896BF6E4EC6 /* GameView.swift in Sources */,
                 33DC2682CF5A413A93732A48 /* LevelSelectView.swift in Sources */,
                 E7D2C80A0EF146FF8AB527E1 /* AboutView.swift in Sources */,
+				DD112233445566778899AABB /* SoundManager.swift in Sources */,
+				FF112233445566778899AABB /* HapticsManager.swift in Sources */,
+				BB223344556677889900BBCC /* SettingsView.swift in Sources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };

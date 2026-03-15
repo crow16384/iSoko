@@ -5,6 +5,7 @@ struct MainMenuView: View {
 
     @State private var showLevelSelect = false
     @State private var showAbout = false
+    @State private var showSettings = false
 
     private var hasSavedGame: Bool {
         PersistenceManager.shared.loadGame() != nil
@@ -57,6 +58,12 @@ struct MainMenuView: View {
                 } label: {
                     MenuButton(title: "About", systemImage: "info.circle")
                 }
+
+                Button {
+                    showSettings = true
+                } label: {
+                    MenuButton(title: "Settings", systemImage: "gearshape")
+                }
             }
             .padding(.horizontal, 40)
 
@@ -70,6 +77,9 @@ struct MainMenuView: View {
         }
         .sheet(isPresented: $showAbout) {
             AboutView()
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
         }
     }
 }
