@@ -18,4 +18,13 @@ enum Direction: CaseIterable {
         case .up, .down: return 0
         }
     }
+
+    var opposite: Direction {
+        switch self {
+        case .up: return .down
+        case .down: return .up
+        case .left: return .right
+        case .right: return .left
+        }
+    }
 }

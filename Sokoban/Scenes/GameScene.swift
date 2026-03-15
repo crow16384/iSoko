@@ -237,7 +237,13 @@ final class GameScene: SKScene {
         guard row >= 0, row < GameState.rows,
               col >= 0, col < GameState.columns else { return }
 
-        // Find shortest path via BFS
+        // First, check if this is a straight-line box push
+        if let push = manager.state.findBoxPush(to: target) {
+            pushBoxAlongPath(direction: push.direction, remainingSteps: push.steps)
+            return
+        }
+
+        // Otherwise, find shortest walking path via BFS
         guard let path = manager.state.findPath(to: target), !path.isEmpty else { return }
 
         // Animate movement along path
@@ -276,6 +282,45 @@ final class GameScene: SKScene {
 
         case .pushed, .blocked:
             // Stop path movement if we hit a box or wall (path may have become invalid)
+            isMovingAlongPath = false
+        }
+    }
+
+    private func pushBoxAlongPath(direction: Direction, remainingSteps: Int) {
+        guard remainingSteps > 0,
+              let manager = gameManager,
+              !manager.isLevelComplete else {
+            isMovingAlongPath = false
+            return
+        }
+
+        isMovingAlongPath = true
+        let result = manager.tryMove(direction)
+
+        switch result {
+        case .pushed:
+            lastDirection = direction
+            updatePlayerIndicator(direction: direction)
+            manager.isAnimating = true
+
+            updateTileVisuals()
+
+            let targetPos = positionForCell(row: manager.state.playerPosition.row, col: manager.state.playerPosition.col)
+            let moveAction = SKAction.move(to: targetPos, duration: animationDuration)
+            moveAction.timingMode = .easeOut
+
+            playerNode.run(moveAction) { [weak self] in
+                manager.isAnimating = false
+                if manager.isLevelComplete {
+                    PersistenceManager.shared.markLevelCompleted(manager.state.levelIndex, moves: manager.state.moveCount)
+                    self?.isMovingAlongPath = false
+                } else {
+                    self?.pushBoxAlongPath(direction: direction, remainingSteps: remainingSteps - 1)
+                }
+            }
+
+        case .moved, .blocked:
+            // Shouldn't happen if findBoxPush was correct, but stop gracefully
             isMovingAlongPath = false
         }
     }

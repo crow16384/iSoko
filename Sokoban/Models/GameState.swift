@@ -106,4 +106,59 @@ struct GameState: Codable {
 
         return nil // No path found
     }
+
+    // MARK: - Box Push Detection
+
+    /// Checks if the player can push a box in a straight line toward the target.
+    /// Returns the push direction and number of steps, or nil if not possible.
+    ///
+    /// Conditions:
+    /// - There is a box adjacent to the player
+    /// - The target is along the same line as player→box, further in that direction
+    /// - Every tile from box+1 to target (inclusive) is walkable (floor or goal)
+    func findBoxPush(to target: Position) -> (direction: Direction, steps: Int)? {
+        for direction in Direction.allCases {
+            let boxPos = playerPosition.moved(direction)
+
+            // Must have a box next to the player in this direction
+            guard tile(at: boxPos).isBox else { continue }
+
+            // Target must be along the same line beyond the box
+            switch direction {
+            case .up:
+                guard target.col == boxPos.col, target.row < boxPos.row else { continue }
+            case .down:
+                guard target.col == boxPos.col, target.row > boxPos.row else { continue }
+            case .left:
+                guard target.row == boxPos.row, target.col < boxPos.col else { continue }
+            case .right:
+                guard target.row == boxPos.row, target.col > boxPos.col else { continue }
+            }
+
+            // Count steps from box to target
+            let steps: Int
+            if direction == .up || direction == .down {
+                steps = abs(target.row - boxPos.row)
+            } else {
+                steps = abs(target.col - boxPos.col)
+            }
+
+            // Verify every tile the box would move through is clear
+            var checkPos = boxPos
+            var pathClear = true
+            for _ in 0..<steps {
+                checkPos = checkPos.moved(direction)
+                let t = tile(at: checkPos)
+                if t != .floor && t != .goal {
+                    pathClear = false
+                    break
+                }
+            }
+
+            if pathClear && steps > 0 {
+                return (direction, steps)
+            }
+        }
+        return nil
+    }
 }
