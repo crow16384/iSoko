@@ -30,13 +30,13 @@ final class PersistenceManager {
 
     func markLevelCompleted(_ index: Int, moves: Int) {
         var completed = completedLevels
-        let existing = completed[String(index)]
-        if existing == nil || moves < existing! {
-            completed[String(index)] = moves
+        let key = String(index)
+        if completed[key].map({ moves < $0 }) ?? true {
+            completed[key] = moves
             defaults.set(completed, forKey: Keys.completedLevels)
         }
-        let highest = highestCompletedLevel
-        if index > highest {
+
+        if index > highestCompletedLevel {
             defaults.set(index, forKey: Keys.highestCompleted)
         }
     }

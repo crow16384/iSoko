@@ -18,28 +18,50 @@ struct GameState: Codable {
     static let columns = 20
     static let rows = 16
 
-    var boxesRemaining: Int {
-        var count = 0
-        for row in grid {
-            for tile in row {
-                if tile == .box { count += 1 }
-            }
-        }
-        return count
+    // MARK: - Cached Counts
+
+    /// Number of boxes NOT yet on goals (decremented by setTile automatically).
+    private(set) var boxesRemaining: Int = 0
+
+    /// Total number of goal positions (constant for the level).
+    private(set) var totalGoals: Int = 0
+
+    var isComplete: Bool { boxesRemaining == 0 }
+
+    /// Create a GameState and pre-compute cached counts from the grid.
+    init(grid: [[Tile]], playerPosition: Position, moveCount: Int, levelIndex: Int) {
+        self.grid = grid
+        self.playerPosition = playerPosition
+        self.moveCount = moveCount
+        self.levelIndex = levelIndex
+        self.boxesRemaining = 0
+        self.totalGoals = 0
+        recomputeCounts()
     }
 
-    var totalGoals: Int {
-        var count = 0
-        for row in grid {
-            for tile in row {
-                if tile.isGoal { count += 1 }
-            }
-        }
-        return count
+    /// Backwards-compatible decoding: recompute cached counts if missing from old saves.
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        grid = try container.decode([[Tile]].self, forKey: .grid)
+        playerPosition = try container.decode(Position.self, forKey: .playerPosition)
+        moveCount = try container.decode(Int.self, forKey: .moveCount)
+        levelIndex = try container.decode(Int.self, forKey: .levelIndex)
+        boxesRemaining = try container.decodeIfPresent(Int.self, forKey: .boxesRemaining) ?? 0
+        totalGoals = try container.decodeIfPresent(Int.self, forKey: .totalGoals) ?? 0
+        recomputeCounts()
     }
 
-    var isComplete: Bool {
-        boxesRemaining == 0
+    private mutating func recomputeCounts() {
+        var boxCount = 0
+        var goalCount = 0
+        for row in grid {
+            for tile in row {
+                if tile == .box { boxCount += 1 }
+                if tile.isGoal { goalCount += 1 }
+            }
+        }
+        boxesRemaining = boxCount
+        totalGoals = goalCount
     }
 
     func tile(at pos: Position) -> Tile {
@@ -53,31 +75,37 @@ struct GameState: Codable {
     mutating func setTile(_ tile: Tile, at pos: Position) {
         guard pos.row >= 0, pos.row < GameState.rows,
               pos.col >= 0, pos.col < GameState.columns else { return }
+
+        let old = grid[pos.row][pos.col]
         grid[pos.row][pos.col] = tile
+
+        // Keep boxesRemaining in sync
+        if old == .box && tile != .box { boxesRemaining -= 1 }
+        if old != .box && tile == .box { boxesRemaining += 1 }
     }
 
     var difficultyTier: String {
-        if levelIndex < 49 { return "Beginner" }
-        if levelIndex < 91 { return "Standard" }
-        return "Expert"
+        switch levelIndex {
+        case ..<49:  return "Beginner"
+        case ..<91:  return "Standard"
+        default:     return "Expert"
+        }
     }
 
-    // MARK: - BFS Pathfinding
+    // MARK: - BFS Pathfinding (O(V) memory via cameFrom dictionary)
 
-    /// Returns the shortest path (as a list of Directions) from the player position
-    /// to the target position, walking only on walkable tiles (no walls, no boxes).
-    /// Returns nil if no path exists.
+    /// Returns the shortest path from the player to the target,
+    /// walking only on walkable tiles. Returns nil if unreachable.
     func findPath(to target: Position) -> [Direction]? {
         let start = playerPosition
         guard start != target else { return [] }
 
-        // Target must be walkable (floor or goal)
         let targetTile = tile(at: target)
         guard targetTile == .floor || targetTile == .goal else { return nil }
 
+        var cameFrom: [Position: (from: Position, dir: Direction)] = [:]
         var visited: Set<Position> = [start]
-        // Each element: (position, directions taken so far)
-        var queue: [(position: Position, path: [Direction])] = [(start, [])]
+        var queue: [Position] = [start]
         var head = 0
 
         while head < queue.count {
@@ -85,26 +113,29 @@ struct GameState: Codable {
             head += 1
 
             for direction in Direction.allCases {
-                let next = current.position.moved(direction)
-
+                let next = current.moved(direction)
                 guard !visited.contains(next) else { continue }
-
-                let nextTile = tile(at: next)
-                // Can only walk on floor, goal, player, playerOnGoal tiles
-                guard nextTile.isWalkable else { continue }
-
-                let newPath = current.path + [direction]
-
-                if next == target {
-                    return newPath
-                }
+                guard tile(at: next).isWalkable else { continue }
 
                 visited.insert(next)
-                queue.append((next, newPath))
+                cameFrom[next] = (current, direction)
+
+                if next == target {
+                    // Reconstruct path by walking backwards
+                    var path: [Direction] = []
+                    var pos = target
+                    while let step = cameFrom[pos] {
+                        path.append(step.dir)
+                        pos = step.from
+                    }
+                    return path.reversed()
+                }
+
+                queue.append(next)
             }
         }
 
-        return nil // No path found
+        return nil
     }
 
     // MARK: - Box Push Detection
