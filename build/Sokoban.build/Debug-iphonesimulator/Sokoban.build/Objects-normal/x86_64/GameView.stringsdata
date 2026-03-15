@@ -1,0 +1,72 @@
+{
+  "source": "/Users/meguty/Develop/Soko/Sokoban/Sokoban/Views/GameView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Level Complete!",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "Menu",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "Next Level",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Level Select",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "Completed in %lld moves!",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Restart Level",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "Main Menu",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 110
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 114
+        }
+      }
+    ]
+  },
+  "version": 1
+}

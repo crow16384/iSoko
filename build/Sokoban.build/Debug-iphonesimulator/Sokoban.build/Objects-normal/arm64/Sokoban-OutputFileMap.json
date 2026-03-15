@@ -1,0 +1,129 @@
+{
+  "" : {
+    "diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Sokoban-primary.dia",
+    "emit-module-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Sokoban-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Sokoban-primary-emit-module.dia",
+    "pch" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Sokoban-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Sokoban-primary.swiftdeps"
+  },
+  "/Users/meguty/Develop/Soko/Sokoban/Sokoban/Managers/GameManager.swift" : {
+    "const-values" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameManager.swiftconstvalues",
+    "dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameManager.d",
+    "diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameManager.dia",
+    "index-unit-output-path" : "/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameManager.o",
+    "llvm-bc" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameManager.bc",
+    "object" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameManager.o",
+    "swift-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameManager.swiftdeps",
+    "swiftmodule" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameManager~partial.swiftmodule"
+  },
+  "/Users/meguty/Develop/Soko/Sokoban/Sokoban/Managers/LevelManager.swift" : {
+    "const-values" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelManager.swiftconstvalues",
+    "dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelManager.d",
+    "diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelManager.dia",
+    "index-unit-output-path" : "/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelManager.o",
+    "llvm-bc" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelManager.bc",
+    "object" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelManager.o",
+    "swift-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelManager.swiftdeps",
+    "swiftmodule" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelManager~partial.swiftmodule"
+  },
+  "/Users/meguty/Develop/Soko/Sokoban/Sokoban/Managers/PersistenceManager.swift" : {
+    "const-values" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/PersistenceManager.swiftconstvalues",
+    "dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/PersistenceManager.d",
+    "diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/PersistenceManager.dia",
+    "index-unit-output-path" : "/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/PersistenceManager.o",
+    "llvm-bc" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/PersistenceManager.bc",
+    "object" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/PersistenceManager.o",
+    "swift-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/PersistenceManager.swiftdeps",
+    "swiftmodule" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/PersistenceManager~partial.swiftmodule"
+  },
+  "/Users/meguty/Develop/Soko/Sokoban/Sokoban/Models/Direction.swift" : {
+    "const-values" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Direction.swiftconstvalues",
+    "dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Direction.d",
+    "diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Direction.dia",
+    "index-unit-output-path" : "/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Direction.o",
+    "llvm-bc" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Direction.bc",
+    "object" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Direction.o",
+    "swift-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Direction.swiftdeps",
+    "swiftmodule" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Direction~partial.swiftmodule"
+  },
+  "/Users/meguty/Develop/Soko/Sokoban/Sokoban/Models/GameState.swift" : {
+    "const-values" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameState.swiftconstvalues",
+    "dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameState.d",
+    "diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameState.dia",
+    "index-unit-output-path" : "/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameState.o",
+    "llvm-bc" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameState.bc",
+    "object" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameState.o",
+    "swift-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameState.swiftdeps",
+    "swiftmodule" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameState~partial.swiftmodule"
+  },
+  "/Users/meguty/Develop/Soko/Sokoban/Sokoban/Models/Tile.swift" : {
+    "const-values" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Tile.swiftconstvalues",
+    "dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Tile.d",
+    "diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Tile.dia",
+    "index-unit-output-path" : "/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Tile.o",
+    "llvm-bc" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Tile.bc",
+    "object" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Tile.o",
+    "swift-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Tile.swiftdeps",
+    "swiftmodule" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/Tile~partial.swiftmodule"
+  },
+  "/Users/meguty/Develop/Soko/Sokoban/Sokoban/Scenes/GameScene.swift" : {
+    "const-values" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameScene.swiftconstvalues",
+    "dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameScene.d",
+    "diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameScene.dia",
+    "index-unit-output-path" : "/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameScene.o",
+    "llvm-bc" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameScene.bc",
+    "object" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameScene.o",
+    "swift-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameScene.swiftdeps",
+    "swiftmodule" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameScene~partial.swiftmodule"
+  },
+  "/Users/meguty/Develop/Soko/Sokoban/Sokoban/SokobanApp.swift" : {
+    "const-values" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/SokobanApp.swiftconstvalues",
+    "dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/SokobanApp.d",
+    "diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/SokobanApp.dia",
+    "index-unit-output-path" : "/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/SokobanApp.o",
+    "llvm-bc" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/SokobanApp.bc",
+    "object" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/SokobanApp.o",
+    "swift-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/SokobanApp.swiftdeps",
+    "swiftmodule" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/SokobanApp~partial.swiftmodule"
+  },
+  "/Users/meguty/Develop/Soko/Sokoban/Sokoban/Views/AboutView.swift" : {
+    "const-values" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/AboutView.swiftconstvalues",
+    "dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/AboutView.d",
+    "diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/AboutView.dia",
+    "index-unit-output-path" : "/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/AboutView.o",
+    "llvm-bc" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/AboutView.bc",
+    "object" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/AboutView.o",
+    "swift-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/AboutView.swiftdeps",
+    "swiftmodule" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/AboutView~partial.swiftmodule"
+  },
+  "/Users/meguty/Develop/Soko/Sokoban/Sokoban/Views/GameView.swift" : {
+    "const-values" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameView.swiftconstvalues",
+    "dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameView.d",
+    "diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameView.dia",
+    "index-unit-output-path" : "/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameView.o",
+    "llvm-bc" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameView.bc",
+    "object" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameView.o",
+    "swift-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameView.swiftdeps",
+    "swiftmodule" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/GameView~partial.swiftmodule"
+  },
+  "/Users/meguty/Develop/Soko/Sokoban/Sokoban/Views/LevelSelectView.swift" : {
+    "const-values" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelSelectView.swiftconstvalues",
+    "dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelSelectView.d",
+    "diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelSelectView.dia",
+    "index-unit-output-path" : "/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelSelectView.o",
+    "llvm-bc" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelSelectView.bc",
+    "object" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelSelectView.o",
+    "swift-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelSelectView.swiftdeps",
+    "swiftmodule" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/LevelSelectView~partial.swiftmodule"
+  },
+  "/Users/meguty/Develop/Soko/Sokoban/Sokoban/Views/MainMenuView.swift" : {
+    "const-values" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/MainMenuView.swiftconstvalues",
+    "dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/MainMenuView.d",
+    "diagnostics" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/MainMenuView.dia",
+    "index-unit-output-path" : "/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/MainMenuView.o",
+    "llvm-bc" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/MainMenuView.bc",
+    "object" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/MainMenuView.o",
+    "swift-dependencies" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/MainMenuView.swiftdeps",
+    "swiftmodule" : "/Users/meguty/Develop/Soko/Sokoban/build/Sokoban.build/Debug-iphonesimulator/Sokoban.build/Objects-normal/arm64/MainMenuView~partial.swiftmodule"
+  }
+}

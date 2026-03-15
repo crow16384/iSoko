@@ -1,0 +1,24 @@
+{
+  "source": "/Users/meguty/Develop/Soko/Sokoban/Sokoban/Views/MainMenuView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "SOKOBAN",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "138 Puzzle Levels",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 21
+        }
+      }
+    ]
+  },
+  "version": 1
+}
